@@ -102,6 +102,21 @@
 	            	<h3>Verifikasi Pesanan</h3>
 	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
 					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>">
+					  	<?php 	$params = array('2', '3', '4');
+					  			$this->db->where_in('id_proses', $params);
+							  	$status_proses = $this->db->get('status_proses')->result(); ?>
+
+						<div class="form-group">
+	                        <label><i><b>Status Proses</b></i></label>
+	                        <select name="id_proses" class="form-control" required>
+	                            <optgroup label="PILIHAN">
+	                            	<option value="<?=$id_proses?>"><?=$nama_status_proses?></option>
+	                                <?php foreach ($status_proses as $o) : ?>
+	                                    <option value="<?php echo $o->id_proses ?>" <?=(($o->id_proses == $id_proses) ? 'selected' : '') ?>><?= $o->nama_status_proses ?></option>
+	                                <?php endforeach ?>
+	                            </optgroup>
+	                        </select>
+	                    </div>
 
 	                    <div class="form-group">
 	                    	<label><i><b>Estimasi Lama Welding</b></i></label>
@@ -125,6 +140,10 @@
 
 	                    <br>
 					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-save"></i> Simpan Konfirmasi Pesanan</button>
+		            	
+		            	<hr>
+		            	<h3>Penjadwalan Gantt Chart</h3>
+		            	<a href="<?=base_url('pemesanan/gantt_view/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
 					</form>
 	            </div>
 	        </div>

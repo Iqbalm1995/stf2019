@@ -57,6 +57,8 @@
                               <a href="<?= base_url('pemesanan/pcc_edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a>
                           <?php }elseif ($role == 'Produksi') {  ?>
                               <a href="<?= base_url('pemesanan/produksi_edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a>
+                          <?php }elseif ($role == 'Operasional') {  ?>
+                              <a href="<?= base_url('pemesanan/operasional_edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a>
                           <?php }else{
                             echo "-";
                           } ?>

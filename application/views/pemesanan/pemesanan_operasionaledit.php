@@ -58,14 +58,6 @@
 	            	<h3>Keterangan Proses Pesanan</h3>
 	            	<table width="100%">
 	            		<tr>
-	            			<td width="30%">Start</td>
-	            			<td>: <strong><?=(!empty($start_pemesanan) ? $start_pemesanan : '(Belum ada estimasi tanggal oleh marketing)') ?></strong></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Delivery</td>
-	            			<td>: <strong><?=(!empty($delivery_pemesanan) ? $delivery_pemesanan : '(Belum ada estimasi tanggal oleh marketing)') ?></strong></td>
-	            		</tr>
-	            		<tr>
 	            			<td width="30%">Estimasi Bahan Baku</td>
 	            			<td>: <strong><?=(!empty($hitung_waktu) ? $hitung_waktu." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
 	            		</tr>
@@ -110,44 +102,29 @@
 	            	<h3>Verifikasi Pesanan</h3>
 	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
 					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>">
-					  	<?php  $status_pesan = $this->db->get('status_pesan')->result();
+					  	<?php 	$params = array('5', '6', '8');
+					  			$this->db->where_in('id_proses', $params);
 							  	$status_proses = $this->db->get('status_proses')->result(); ?>
 
-	                    <div class="form-group">
-	                        <label><i><b>Status Order</b></i></label>
-	                        <select name="id_status_pesan" class="form-control" required>
+						<div class="form-group">
+	                        <label><i><b>Status Proses</b></i></label>
+	                        <select name="id_proses" class="form-control" required>
 	                            <optgroup label="PILIHAN">
-	                            	<option value="">-Pilih-</option>
-	                                <?php foreach ($status_pesan as $o) : ?>
-	                                    <option value="<?php echo $o->id_status_pesan ?>" <?=(($o->id_status_pesan == $id_status_pesan) ? 'selected' : '') ?>><?= $o->nama_status_pesan ?></option>
+	                            	<option value="<?=$id_proses?>"><?=$nama_status_proses?></option>
+	                                <?php foreach ($status_proses as $o) : ?>
+	                                    <option value="<?php echo $o->id_proses ?>" <?=(($o->id_proses == $id_proses) ? 'selected' : '') ?>><?= $o->nama_status_proses ?></option>
 	                                <?php endforeach ?>
 	                            </optgroup>
 	                        </select>
 	                    </div>
 
-	                    <div class="form-group">
-	                        <label><i><b>Start Pemesanan</b></i></label>
-	                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" name="start_pemesanan" placeholder="YYYY-MM-DD" value="<?=$start_pemesanan;?>">
-	                    </div>
-
-	                    <div class="form-group">
-	                        <label><i><b>Delivery Pemesanan</b></i></label>
-	                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" name="delivery_pemesanan" placeholder="YYYY-MM-DD" value="<?=$delivery_pemesanan;?>">
-	                    </div>
-
-	                    <div class="form-group">
-	                        <label><i><b>Status Proses</b></i></label> : 
-	                        <?=$nama_status_proses;?>
-		                </div>
-	                    
-	                    
-
 	                    <br>
-					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-save"></i> Simpan Verifikasi Pesanan</button>
+					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-save"></i> Simpan Konfirmasi Pesanan</button>
+		            	
+		            	<hr>
+		            	<h3>Penjadwalan Gantt Chart</h3>
+		            	<a href="<?=base_url('pemesanan/gantt_view/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
 					</form>
-	            	<hr>
-	            	<h3>Penjadwalan Gantt Chart</h3>
-	            	<a href="<?=base_url('pemesanan/gantt/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Atur Gantt Chart</a>
 	            </div>
 	        </div>
 

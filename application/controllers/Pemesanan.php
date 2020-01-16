@@ -162,7 +162,7 @@ class Pemesanan extends CI_Controller {
             'qty' 				=> $this->input->post('qty'),
             'tgl_pesan' 		=> date('Y-m-d'),
             'id_status_pesan'   => 1,
-            'id_proses' 		=> 8,
+            'id_proses' 		=> 7,
         );
         $tambahpesanan = $this->pelanggan->tambahpesanan($data);
 
@@ -265,6 +265,8 @@ class Pemesanan extends CI_Controller {
                 'nama_status_pesan'         => set_value('nama_status_pesan', $row->nama_status_pesan),
                 'nama_status_proses'        => set_value('nama_status_proses', $row->nama_status_proses),
                 'total_pembayaran'          => set_value('total_pembayaran', $row->total_pembayaran),
+                'start_pemesanan'           => set_value('start_pemesanan', $row->start_pemesanan),
+                'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
             );
 
             $this->load->view('static/header_view');
@@ -306,6 +308,8 @@ class Pemesanan extends CI_Controller {
                 'nama_status_pesan'         => set_value('nama_status_pesan', $row->nama_status_pesan),
                 'nama_status_proses'        => set_value('nama_status_proses', $row->nama_status_proses),
                 'total_pembayaran'          => set_value('total_pembayaran', $row->total_pembayaran),
+                'start_pemesanan'           => set_value('start_pemesanan', $row->start_pemesanan),
+                'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
             );
 
             $this->load->view('static/header_view');
@@ -347,10 +351,55 @@ class Pemesanan extends CI_Controller {
                 'nama_status_pesan'         => set_value('nama_status_pesan', $row->nama_status_pesan),
                 'nama_status_proses'        => set_value('nama_status_proses', $row->nama_status_proses),
                 'total_pembayaran'          => set_value('total_pembayaran', $row->total_pembayaran),
+                'start_pemesanan'           => set_value('start_pemesanan', $row->start_pemesanan),
+                'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
             );
 
             $this->load->view('static/header_view');
             $this->load->view('pemesanan/pemesanan_produksiedit', $data);
+            $this->load->view('static/footer_view');
+        } else {
+            $this->session->set_flashdata('message1', '
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Gagal <i class="glyphicon glyphicon-ok"></i></strong> Ambil data
+            </div>
+            ');
+            redirect (base_url().'pemesanan');
+        }
+    }
+
+    function operasional_edit($id)
+    {
+        $row = $this->pemesanan->get_by_id($id);
+
+        if ($row) {
+            $data = array(
+                'aksi'                      => 'Ubah',
+                'action'                    => base_url('pemesanan/proses_operasionaledit'),
+                'id_pesanan'                => set_value('id_pesanan', $row->id_pesanan),
+                'nama_pelanggan'            => set_value('nama_pelanggan', $row->nama_pelanggan),
+                'alamat'                    => set_value('alamat', $row->alamat),
+                'no_hp'                     => set_value('no_hp', $row->no_hp),
+                'nomor_pesanan'             => set_value('nomor_pesanan', $row->nomor_pesanan),
+                'nama_kategori'             => set_value('nama_kategori', $row->nama_kategori),
+                'nama_produk'               => set_value('nama_produk', $row->nama_produk),
+                'qty'                       => set_value('qty', $row->qty),
+                'hitung_waktu'              => set_value('hitung_waktu', $row->hitung_waktu),
+                'lama_whelding'             => set_value('lama_whelding', $row->lama_whelding),
+                'lama_mashining'            => set_value('lama_mashining', $row->lama_mashining),
+                'tgl_pesan'                 => set_value('tgl_pesan', $row->tgl_pesan),
+                'id_status_pesan'           => set_value('id_status_pesan', $row->id_status_pesan),
+                'id_proses'                 => set_value('id_proses', $row->id_proses),
+                'nama_status_pesan'         => set_value('nama_status_pesan', $row->nama_status_pesan),
+                'nama_status_proses'        => set_value('nama_status_proses', $row->nama_status_proses),
+                'total_pembayaran'          => set_value('total_pembayaran', $row->total_pembayaran),
+                'start_pemesanan'           => set_value('start_pemesanan', $row->start_pemesanan),
+                'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
+            );
+
+            $this->load->view('static/header_view');
+            $this->load->view('pemesanan/pemesanan_operasionaledit', $data);
             $this->load->view('static/footer_view');
         } else {
             $this->session->set_flashdata('message1', '
@@ -369,7 +418,8 @@ class Pemesanan extends CI_Controller {
  
         $data = array(
             'id_status_pesan'       => $this->input->post('id_status_pesan'),
-            'id_proses'             => $this->input->post('id_proses'),
+            'start_pemesanan'       => $this->input->post('start_pemesanan'),
+            'delivery_pemesanan'    => $this->input->post('delivery_pemesanan')
         );
 
         $where = array('id_pesanan' => $id_pesanan);
@@ -389,8 +439,9 @@ class Pemesanan extends CI_Controller {
         $id_pesanan                 = $this->input->post('id_pesanan');
  
         $data = array(
-            'lama_whelding'       => $this->input->post('lama_whelding'),
-            'lama_mashining'   => $this->input->post('lama_mashining'),
+            'lama_whelding'         => $this->input->post('lama_whelding'),
+            'lama_mashining'        => $this->input->post('lama_mashining'),
+            'id_proses'             => $this->input->post('id_proses'),
         );
 
         $where = array('id_pesanan' => $id_pesanan);
@@ -412,6 +463,7 @@ class Pemesanan extends CI_Controller {
         $data = array(
             'hitung_waktu'       => $this->input->post('hitung_waktu'),
             'total_pembayaran'   => $this->input->post('total_pembayaran'),
+            'id_proses'          => $this->input->post('id_proses'),
         );
 
         $where = array('id_pesanan' => $id_pesanan);
@@ -424,6 +476,26 @@ class Pemesanan extends CI_Controller {
             </div>
             ');
         redirect (base_url().'pemesanan/pcc_edit/'.$id_pesanan);
+    }
+
+    function proses_operasionaledit()
+    {
+        $id_pesanan                 = $this->input->post('id_pesanan');
+ 
+        $data = array(
+            'id_proses'          => $this->input->post('id_proses'),
+        );
+
+        $where = array('id_pesanan' => $id_pesanan);
+
+        $this->pemesanan->update_data($where, $data);
+        $this->session->set_flashdata('message1', '
+            <div class="alert alert-info alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Berhasil <i class="glyphicon glyphicon-ok"></i></strong> Ubah data
+            </div>
+            ');
+        redirect (base_url().'pemesanan/operasional_edit/'.$id_pesanan);
     }
 
     public function tambah_bahan_baku()

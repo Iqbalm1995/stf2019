@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Jan 2020 pada 16.39
+-- Waktu pembuatan: 16 Jan 2020 pada 17.51
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -315,7 +315,8 @@ INSERT INTO `level` (`id_level`, `nama_level`) VALUES
 (1, 'Marketing'),
 (2, 'Ppc'),
 (3, 'Produksi'),
-(4, 'Administrator');
+(4, 'Administrator'),
+(5, 'Operasional');
 
 -- --------------------------------------------------------
 
@@ -342,15 +343,16 @@ CREATE TABLE `pelanggan` (
   `alamat` text NOT NULL,
   `no_hp` varchar(15) NOT NULL,
   `username` varchar(200) NOT NULL,
-  `password` varchar(200) NOT NULL
+  `password` varchar(200) NOT NULL,
+  `id_kategori` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pelanggan`
 --
 
-INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `alamat`, `no_hp`, `username`, `password`) VALUES
-(1, 'iqbal', 'Jl. Suryani dalam 2 no.101A/83 RT02/RW02\r\nKelurahan warung muncang, Kecamatan Bandung kulon', '083820509091', 'iqbal123', '$2y$10$qzeVkS0kPlcNJTV.WY3q5OoFXZ/24OSwWl474Tr57nZtpZw7FqHl2');
+INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `alamat`, `no_hp`, `username`, `password`, `id_kategori`) VALUES
+(1, 'iqbal', 'Jl. Suryani dalam 2 no.101A/83 RT02/RW02\r\nKelurahan warung muncang, Kecamatan Bandung kulon', '083820509091', 'iqbal123', '$2y$10$qzeVkS0kPlcNJTV.WY3q5OoFXZ/24OSwWl474Tr57nZtpZw7FqHl2', 1);
 
 -- --------------------------------------------------------
 
@@ -371,7 +373,8 @@ CREATE TABLE `pembayaran` (
 --
 
 INSERT INTO `pembayaran` (`id_pembayaran`, `nomor_pesanan`, `no_pembayaran`, `bukti`, `status`) VALUES
-(1, 'T001', 'AC2401', 'file_1578312091.jpg', 1);
+(1, 'T001', 'AC2401', 'file_1578312091.jpg', 1),
+(2, 'T002', 'AC2402', 'file_1579190609.png', 1);
 
 -- --------------------------------------------------------
 
@@ -393,15 +396,18 @@ CREATE TABLE `pesanan` (
   `hitung_waktu` int(11) DEFAULT NULL,
   `lama_whelding` int(11) DEFAULT NULL,
   `lama_mashining` int(11) DEFAULT NULL,
-  `total_pembayaran` varchar(255) DEFAULT NULL
+  `total_pembayaran` varchar(255) DEFAULT NULL,
+  `start_pemesanan` date DEFAULT NULL,
+  `delivery_pemesanan` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pesanan`
 --
 
-INSERT INTO `pesanan` (`id_pesanan`, `id_pelanggan`, `nomor_pesanan`, `gunchart`, `id_kategori`, `nama_produk`, `qty`, `tgl_pesan`, `id_proses`, `id_status_pesan`, `hitung_waktu`, `lama_whelding`, `lama_mashining`, `total_pembayaran`) VALUES
-(1, 1, 'T001', NULL, 1, 'Conveyor', 30, '2020-01-06', 1, 2, 7, 5, 5, '750000');
+INSERT INTO `pesanan` (`id_pesanan`, `id_pelanggan`, `nomor_pesanan`, `gunchart`, `id_kategori`, `nama_produk`, `qty`, `tgl_pesan`, `id_proses`, `id_status_pesan`, `hitung_waktu`, `lama_whelding`, `lama_mashining`, `total_pembayaran`, `start_pemesanan`, `delivery_pemesanan`) VALUES
+(1, 1, 'T001', NULL, 1, 'Conveyor', 30, '2020-01-06', 5, 2, 7, 5, 5, '750000', NULL, NULL),
+(2, 1, 'T002', NULL, 1, 'Fish Feeder', 20, '2020-01-16', 6, 2, 5, 4, 2, '450000', '2020-01-16', '2020-01-25');
 
 -- --------------------------------------------------------
 
@@ -493,8 +499,11 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `order_id`, `name`, `start`, `end`, `parent_id`, `milestone`, `ordinal`, `ordinal_priority`, `complete`) VALUES
-(4, 1, 'Order Patch', '2020-01-11 00:00:00', '2020-01-17 00:00:00', NULL, 0, 1, '2020-01-06 12:37:15', 100),
-(6, 1, 'pay', '2020-01-18 00:00:00', '2020-01-21 00:00:00', NULL, 0, 3, '2020-01-06 13:05:52', 0);
+(4, 1, 'Order Patch', '2020-01-14 00:00:00', '2020-01-20 00:00:00', NULL, 0, 1, '2020-01-06 12:37:15', 100),
+(6, 1, 'pay', '2020-01-18 00:00:00', '2020-01-21 00:00:00', NULL, 0, 3, '2020-01-06 13:05:52', 0),
+(7, 2, 'Order Bahan Baku', '2020-01-17 00:00:00', '2020-01-20 00:00:00', NULL, 0, 4, '2020-01-16 16:13:31', 0),
+(8, 2, 'Menunggu Konfirmasi Order BB', '2020-01-16 00:00:00', '2020-01-17 00:00:00', NULL, 0, 5, '2020-01-16 16:14:06', 100),
+(9, 2, 'QC', '2020-01-20 00:00:00', '2020-01-22 00:00:00', NULL, 0, 6, '2020-01-16 16:18:21', 0);
 
 -- --------------------------------------------------------
 
@@ -517,7 +526,8 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `id_level`) VALUES
 (1, 'admin', '$2y$10$8USFhi3RWWDu5NFFk0xzfOR3eTmHhenMtlp87mHRMlSxvavhJQprW', 4),
 (2, 'marketing', '$2y$10$8USFhi3RWWDu5NFFk0xzfOR3eTmHhenMtlp87mHRMlSxvavhJQprW', 1),
 (3, 'pcc', '$2y$10$8USFhi3RWWDu5NFFk0xzfOR3eTmHhenMtlp87mHRMlSxvavhJQprW', 2),
-(4, 'produksi', '$2y$10$8USFhi3RWWDu5NFFk0xzfOR3eTmHhenMtlp87mHRMlSxvavhJQprW', 3);
+(4, 'produksi', '$2y$10$8USFhi3RWWDu5NFFk0xzfOR3eTmHhenMtlp87mHRMlSxvavhJQprW', 3),
+(5, 'operasional', '$2y$10$P05SLl.iN1gYUK08ih7nieKG9qzdnlZqr0HpYAfGfb6Q.6s07KzDq', 5);
 
 --
 -- Indexes for dumped tables
@@ -565,7 +575,8 @@ ALTER TABLE `link`
 -- Indeks untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  ADD PRIMARY KEY (`id_pelanggan`);
+  ADD PRIMARY KEY (`id_pelanggan`),
+  ADD KEY `id_kategori` (`id_kategori`);
 
 --
 -- Indeks untuk tabel `pembayaran`
@@ -646,7 +657,7 @@ ALTER TABLE `ket_bahan_baku`
 -- AUTO_INCREMENT untuk tabel `level`
 --
 ALTER TABLE `level`
-  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `link`
@@ -664,13 +675,13 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `status_bayar`
@@ -694,13 +705,13 @@ ALTER TABLE `status_proses`
 -- AUTO_INCREMENT untuk tabel `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -717,6 +728,12 @@ ALTER TABLE `bahan_baku`
 --
 ALTER TABLE `data_bahan_baku`
   ADD CONSTRAINT `data_bahan_baku_ibfk_1` FOREIGN KEY (`id_ket_bb`) REFERENCES `ket_bahan_baku` (`id_ket_bb`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  ADD CONSTRAINT `pelanggan_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`);
 
 --
 -- Ketidakleluasaan untuk tabel `pesanan`

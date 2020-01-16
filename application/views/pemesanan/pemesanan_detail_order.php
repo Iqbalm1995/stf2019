@@ -58,16 +58,12 @@
 	            	<h3>Keterangan Proses Pesanan</h3>
 	            	<table width="100%">
 	            		<tr>
-	            			<td width="30%">Estimasi Bahan Baku</td>
-	            			<td>: <strong><?=(!empty($hitung_waktu) ? $hitung_waktu." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
+	            			<td width="30%">Start</td>
+	            			<td>: <strong><?=(!empty($start_pemesanan) ? $start_pemesanan : '(Belum ada estimasi tanggal oleh marketing)') ?></strong></td>
 	            		</tr>
 	            		<tr>
-	            			<td width="30%">Lama Welding</td>
-	            			<td>: <strong><?=(!empty($lama_whelding) ? $lama_whelding." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Lama Machining</td>
-	            			<td>: <strong><?=(!empty($lama_mashining) ? $lama_mashining." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
+	            			<td width="30%">Delivery</td>
+	            			<td>: <strong><?=(!empty($delivery_pemesanan) ? $delivery_pemesanan : '(Belum ada estimasi tanggal oleh marketing)') ?></strong></td>
 	            		</tr>
 	            		<tr>
 	            			<td colspan="2" class="text-right pt-4">
@@ -113,9 +109,6 @@
 	            				</td>
 	            			</tr>
 	            		</table>
-		            	<hr>
-		            	<h3>Penjadwalan Gantt Chart</h3>
-		            	<a href="<?=base_url('pemesanan/gantt_view/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Atur Gantt Chart</a>
 
 	            	<?php } ?>
 

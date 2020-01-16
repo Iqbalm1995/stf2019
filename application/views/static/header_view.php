@@ -17,12 +17,15 @@
 
   <!-- Custom styles for this template -->
   <link href="<?php echo base_url('asset/');?>css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="<?php echo base_url('asset/');?>css/datepicker.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
   <link href="<?php echo base_url('asset/');?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
   <!-- JS -->
   <script src="<?php echo base_url('asset/');?>vendor/jquery/jquery.min.js"></script>
+
+  <script src="<?php echo base_url('asset/');?>js/bootstrap-datepicker.js"></script>
   <!-- Page level plugins -->
   <script src="<?php echo base_url('asset/');?>vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="<?php echo base_url('asset/');?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -113,6 +116,23 @@
       <?php } ?>
 
       <?php if ($this->session->userdata('nama_level') == 'Produksi') { ?>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu1" aria-expanded="true" aria-controls="menu1">
+            <i class="fas fa-fw fa-hand-holding-usd"></i>
+            <span>Pemesanan</span>
+          </a>
+          <div id="menu1" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Menu Pemesanan:</h6>
+              <a class="collapse-item" href="<?php echo base_url('pemesanan');?>">Data Pemesanan</a>
+            </div>
+          </div>
+        </li>
+
+      <?php } ?>
+
+      <?php if ($this->session->userdata('nama_level') == 'Operasional') { ?>
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu1" aria-expanded="true" aria-controls="menu1">

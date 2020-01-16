@@ -32,6 +32,7 @@
 	                                <option value="2">PCC</option>
 	                                <option value="3">Produksi</option>
 	                                <option value="4">Administrator</option>
+	                                <option value="5">Operasional</option>
 	                            </optgroup>
 	                        </select>
 	                    </div>
