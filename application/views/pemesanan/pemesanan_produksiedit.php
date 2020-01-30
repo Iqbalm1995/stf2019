@@ -57,6 +57,10 @@
 	            	<hr>
 	            	<h3>Keterangan Proses Pesanan</h3>
 	            	<table width="100%">
+						<tr>
+	            			<td width="30%">Jadwal Produksi</td>
+	            			<td>: <strong><?=(!empty($jadwal_produksi) ? $jadwal_produksi : '(Belum Ada Estimasi Waktu)') ?></strong></td>
+	            		</tr>
 	            		<tr>
 	            			<td width="30%">Estimasi Bahan Baku</td>
 	            			<td>: <strong><?=(!empty($hitung_waktu) ? $hitung_waktu." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
@@ -105,6 +109,13 @@
 					  	<?php 	$params = array('2', '3', '4');
 					  			$this->db->where_in('id_proses', $params);
 							  	$status_proses = $this->db->get('status_proses')->result(); ?>
+
+						
+
+						<div class="form-group">
+	                        <label><i><b>Jadwal Produksi</b></i></label>
+	                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" name="jadwal_produksi" placeholder="YYYY-MM-DD" value="<?=$jadwal_produksi;?>">
+	                    </div>
 
 						<div class="form-group">
 	                        <label><i><b>Status Proses</b></i></label>

@@ -150,26 +150,43 @@
 		                      <th width="5%">No.</th>
 		                      <th>Nama Bahan Baku</th>
 		                      <th>Jenis</th>
+		                      <th>Supplier</th>
 		                      <th>Qty x <?=$qty;?></th>
+		                      <th>Harga x <?=$qty;?></th>
 		                    </tr>
 		                  </thead>
 		                  <tbody>
 		                  	<?php 
 		                  	  $list_bb = $this->pemesanan->tampil_bb($nama_produk);
-		                      $no = 1;
+							  $no = 1;
+							  $total_bb = 0;
+							  $total_harga_bb = 0;
 		                      foreach($list_bb as $bb){ 
 		                      $bb_qty = $bb->qty;
 		                      $order_p = $qty;
-		                      $total_bbQty = $bb_qty * $order_p;
+							  $total_bbQty = $bb_qty * $order_p;
+							  $harga_bb = $total_bbQty * $bb->harga;
+							  $total_bb = $total_bb +  $harga_bb;
+							  $total_harga_bb = $total_harga_bb +  $total_bb;
+
 		                    ?>
 		                      <tr>
 		                        <td class="text-center"><?= $no++ ?></td>
 		                        <td><strong><?= $bb->nama_bb ?></strong></td>
 		                        <td><?= $bb->jenis ?> (<?= $bb->qty ?>)</td>
+		                        <td><?= $bb->supplier ?></td>
 		                        <td class="text-center"><?= $total_bbQty ?></td>
+		                        <td class="text-right">Rp<?=(!empty($bb->harga) ? number_format($harga_bb, 0 , '' , '.' ) : '-') ?></td>
 		                      </tr>
 		                    <?php } ?>
 		                  </tbody>
+						  <tfoot>
+								<tr>
+									<th colspan="4" class="text-right"><i>Total Pemesanan Bahan Baku</i></th>
+									<th class="text-center"><?= $total_bb ?></th>
+									<th class="text-right">Rp<?=(!empty($total_harga_bb) ? number_format($total_harga_bb, 0 , '' , '.' ) : '-') ?></th>
+							    </tr>
+						  </tfoot>
 		            </table>
 	            	<hr>
 	            	<h3>Penjadwalan Gantt Chart</h3>

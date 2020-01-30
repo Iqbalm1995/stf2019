@@ -13,6 +13,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Tabel Pemesanan</h6>
             </div>
+            <?php  $role = $this->session->userdata('nama_level'); ?>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -28,6 +29,14 @@
                       <th>Tanggal Pesan</th>
                       <th>Status Order</th>
                       <th>Status Proses</th>
+                          <?php if ($role == 'Marketing') { ?>
+                              <th>Jadwal Produksi</th>
+                              <th>Jadwal Distribusi</th>
+                          <?php }elseif ($role == 'Produksi') {  ?>
+                              <th>Jadwal Produksi</th>
+                          <?php }elseif ($role == 'Operasional') {  ?>
+                              <th>Jadwal Distribusi</th>
+                          <?php } ?>
                       <th width="10%">Aksi</th>
                     </tr>
                   </thead>
@@ -47,9 +56,16 @@
                         <td class="text-center"><small><?= $r->tgl_pesan ?></small></td>
                         <td class="text-center"><small><strong><?= $r->nama_status_pesan ?></strong></small></td>
                         <td class="text-center"><small><strong><?= $r->nama_status_proses ?></strong></small></td>
+                          <?php if ($role == 'Marketing') { ?>
+                              <td class="text-center"><small><strong><?=(!empty($r->jadwal_produksi) ? $r->jadwal_produksi : '-') ?></strong></small></td>
+                              <td class="text-center"><small><strong><?=(!empty($r->jadwal_distribusi) ? $r->jadwal_distribusi : '-') ?></strong></small></td>
+                          <?php }elseif ($role == 'Produksi') {  ?>
+                              <td class="text-center"><small><strong><?=(!empty($r->jadwal_produksi) ? $r->jadwal_produksi : '-') ?></strong></small></td>
+                          <?php }elseif ($role == 'Operasional') {  ?>
+                              <td class="text-center"><small><strong><?=(!empty($r->jadwal_distribusi) ? $r->jadwal_distribusi : '-') ?></strong></small></td>
+                          <?php } ?>
                         <td class="text-center">
-                          <?php 
-                            $role = $this->session->userdata('nama_level');
+                          <?php
                             if ($role == 'Marketing') { ?>
                               <a href="<?= base_url('pemesanan/edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a> 
                               <a href="<?= base_url('pemesanan/hapus/'.$r->id_pesanan); ?>">[Hapus]</a>

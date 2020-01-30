@@ -353,6 +353,7 @@ class Pemesanan extends CI_Controller {
                 'total_pembayaran'          => set_value('total_pembayaran', $row->total_pembayaran),
                 'start_pemesanan'           => set_value('start_pemesanan', $row->start_pemesanan),
                 'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
+                'jadwal_produksi'           => set_value('jadwal_produksi', $row->jadwal_produksi),
             );
 
             $this->load->view('static/header_view');
@@ -396,6 +397,7 @@ class Pemesanan extends CI_Controller {
                 'total_pembayaran'          => set_value('total_pembayaran', $row->total_pembayaran),
                 'start_pemesanan'           => set_value('start_pemesanan', $row->start_pemesanan),
                 'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
+                'jadwal_distribusi'         => set_value('jadwal_distribusi', $row->jadwal_distribusi),
             );
 
             $this->load->view('static/header_view');
@@ -439,6 +441,7 @@ class Pemesanan extends CI_Controller {
         $id_pesanan                 = $this->input->post('id_pesanan');
  
         $data = array(
+            'jadwal_produksi'       => $this->input->post('jadwal_produksi'),
             'lama_whelding'         => $this->input->post('lama_whelding'),
             'lama_mashining'        => $this->input->post('lama_mashining'),
             'id_proses'             => $this->input->post('id_proses'),
@@ -484,6 +487,7 @@ class Pemesanan extends CI_Controller {
  
         $data = array(
             'id_proses'          => $this->input->post('id_proses'),
+            'jadwal_distribusi'  => $this->input->post('jadwal_distribusi'),
         );
 
         $where = array('id_pesanan' => $id_pesanan);
