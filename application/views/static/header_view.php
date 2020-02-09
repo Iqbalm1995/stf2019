@@ -58,7 +58,7 @@
       <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('dashboard/');?>">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Home</span></a>
       </li>
 
       <?php if ($this->session->userdata('nama_level') == 'Pelanggan') { ?>

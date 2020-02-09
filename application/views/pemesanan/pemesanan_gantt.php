@@ -6,7 +6,7 @@
 	    <div class="container-fluid">
 
 	    	<!-- Page Heading -->
-	        <h1 class="h3 mb-2 text-gray-800">Gantt Chart Pemesanan ID. <?=$order_id?></h1>
+	        <h1 class="h3 mb-2 text-gray-800">Gantt Chart Pemesanan ID. <?=$nomor_pesanan?></h1>
 	        <hr>
 	        <?php echo $this->session->userdata('message1') <> '' ? $this->session->userdata('message1') : ''; ?>
 	        <!-- <a class="btn btn-primary" href="<?php echo base_url('pemesanan/'); ?>">Kembali</a> -->
@@ -28,7 +28,7 @@
 		  var dp = new DayPilot.Gantt("dp");
 
 		  dp.startDate = new DayPilot.Date();
-		  dp.days = 30;
+		  dp.days = 160;
 
 		  dp.linkBottomMargin = 5;
 
@@ -71,7 +71,7 @@
 		  ]);
 
 		  dp.onRowCreate = function(args) {
-		    $.post("<?=base_url('gantt/')?>backend_create.php?order_id=<?=$order_id?>", {
+		    $.post("<?=base_url('gantt/')?>backend_create.php?nomor_pesanan=<?=$nomor_pesanan?>", {
 		        name: args.text,
 		        start: dp.startDate.toString(),
 		        end: dp.startDate.addDays(1).toString()
@@ -140,7 +140,7 @@
 		  loadLinks();
 
 		  function loadTasks() {
-		    $.post("<?=base_url('gantt/')?>backend_tasks.php?order_id=<?=$order_id?>", function(data) {
+		    $.post("<?=base_url('gantt/')?>backend_tasks.php?nomor_pesanan=<?=$nomor_pesanan?>", function(data) {
 		      dp.tasks.list = data;
 		      dp.update();
 		    });

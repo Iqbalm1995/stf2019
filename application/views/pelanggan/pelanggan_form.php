@@ -17,27 +17,27 @@
 
 						<div class="form-group">
 	                        <label>Nama Pelanggan</label>
-	                        <input type="text" name="nama_pelanggan" placeholder="Nama Pelanggan" class="form-control" value="<?=$nama_pelanggan;?>">
+	                        <input type="text" name="nama_pelanggan" placeholder="Nama Pelanggan" class="form-control" value="<?=$nama_pelanggan;?>" required>
 	                    </div>
 	                    
 					  	<div class="form-group">
 	                        <label>Alamat</label>
-	                        <textarea name="alamat" class="form-control" placeholder="Alamat"><?=$alamat;?></textarea>
+	                        <textarea name="alamat" class="form-control" placeholder="Alamat" required><?=$alamat;?></textarea>
 	                    </div>
 
 	                    <div class="form-group">
 	                        <label>No Hp</label>
-	                        <input type="phone" name="no_hp" placeholder="No Hp" class="form-control" value="<?=$no_hp;?>">
+	                        <input type="phone" name="no_hp" placeholder="No Hp" class="form-control" value="<?=$no_hp;?>" required>
 	                    </div>
 
 						<div class="form-group">
 	                        <label>Username</label>
-	                        <input type="text" name="username" placeholder="Username" class="form-control" value="<?=$username;?>">
+	                        <input type="text" name="username" placeholder="Username" class="form-control" value="<?=$username;?>" required>
 	                    </div>
 
 	                    <div class="form-group">
 	                        <label>Password</label>
-	                        <input type="password" name="password" placeholder="Password" class="form-control" value="<?=$password;?>">
+	                        <input type="password" name="password" placeholder="Password" class="form-control" value="<?=$password;?>" required>
 	                    </div>
 
 	                    <br>

@@ -44,7 +44,7 @@
 
 	                    <div class="form-group">
 	                        <label>Qty</label>
-	                        <input type="number" name="qty" placeholder="qty" class="form-control" value="<?=$qty;?>">
+	                        <input type="number" name="qty" placeholder="qty" class="form-control" value="<?=$qty;?>" required>
 	                    </div>
 	                    <br>
 					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-paper-plane"></i> Kirim Permintaan</button>

@@ -4,8 +4,8 @@ require_once '_db.php';
 $now = (new DateTime("now"))->format('Y-m-d H:i:s');
 $ordinal = db_get_max_ordinal(null) + 1;
 
-$stmt = $db->prepare("INSERT INTO task (order_id, name, start, end, ordinal, ordinal_priority) VALUES (:order_id, :name, :start, :end, :ordinal, :priority)");
-$stmt->bindParam(':order_id', $_GET['order_id']);
+$stmt = $db->prepare("INSERT INTO task (order_id, name, start, end, ordinal, ordinal_priority) VALUES (:nomor_pesanan, :name, :start, :end, :ordinal, :priority)");
+$stmt->bindParam(':nomor_pesanan', $_GET['nomor_pesanan']);
 $stmt->bindParam(':name', $_POST['name']);
 $stmt->bindParam(':start', $_POST['start']);
 $stmt->bindParam(':end', $_POST['end']);

@@ -83,6 +83,10 @@ class M_pemesanan extends CI_Model {
 		$this->db->insert($this->table,$data);
 	}
 
+	function input_gantt($data){
+		$this->db->insert('task',$data);
+	}
+
 	function input_data_bb($data){
 		$this->db->insert('bahan_baku',$data);
 	}

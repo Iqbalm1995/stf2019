@@ -39,7 +39,8 @@
                         <td><?= $r->username ?></td>
                         <td class="text-center">
                           <a href="<?= base_url('pelanggan/edit/'.$r->id_pelanggan); ?>">[Ubah]</a> 
-                          <a href="<?= base_url('pelanggan/hapus/'.$r->id_pelanggan); ?>">[Hapus]</a>
+                          <!-- <a href="<?= base_url('pelanggan/hapus/'.$r->id_pelanggan); ?>">[Hapus]</a> -->
+                          <a href="#" onclick="hapusData(<?= $r->id_pelanggan; ?>)">[Hapus]</a>
                         </td>
                       </tr>
                     <?php } ?>
@@ -59,5 +60,14 @@
           $(document).ready(function() {
             $('#dataTable').DataTable();
           });
+
+          function hapusData(id) {
+            var r = confirm("Yakin akan hapus data ini");
+            if (r == true) {
+              location.replace("<?php echo base_url('pelanggan/hapus/')?>" + id )
+            } else {
+              alert("Data tidak jadi dihapus")
+            }
+          }
         </script>
         <!-- End Script Data Tabel -->

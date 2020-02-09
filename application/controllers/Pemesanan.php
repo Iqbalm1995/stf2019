@@ -31,25 +31,25 @@ class Pemesanan extends CI_Controller {
         $id = $this->session->userdata('id_user');
         $data['pemesanan'] = $this->pemesanan->tampil_data_order($id);
 
-        $this->load->view('static/header_view');
-        $this->load->view('pemesanan/pemesanan_order', $data);
-        $this->load->view('static/footer_view');
+        $this->load->view('static/header_login');
+        $this->load->view('pemesanan/pemesanan_order_new', $data);
+        $this->load->view('static/footer_login');
     }
 
-    public function gantt($order_id)
+    public function gantt($nomor_pesanan)
     {
         $id = $this->session->userdata('id_user');
-        $data['order_id'] = $order_id;
+        $data['nomor_pesanan'] = $nomor_pesanan;
 
         $this->load->view('static/header_view');
         $this->load->view('pemesanan/pemesanan_gantt', $data);
         $this->load->view('static/footer_view');
     }
 
-    public function gantt_view($order_id)
+    public function gantt_view($nomor_pesanan)
     {
         $id = $this->session->userdata('id_user');
-        $data['order_id'] = $order_id;
+        $data['nomor_pesanan'] = $nomor_pesanan;
 
         $this->load->view('static/header_view');
         $this->load->view('pemesanan/pemesanan_gantt_view', $data);
@@ -119,9 +119,9 @@ class Pemesanan extends CI_Controller {
         $data['kategori'] = $this->kategori->tampil_data();
         $data['produk'] = $this->pemesanan->tampil_produk();
 
-        $this->load->view('static/header_view');
-        $this->load->view('pemesanan/pemesanan_form_order', $data);
-        $this->load->view('static/footer_view');
+        $this->load->view('static/header_login');
+        $this->load->view('pemesanan/pemesanan_form_order_new', $data);
+        $this->load->view('static/footer_login');
     }
 
 	public function tambah_data()
@@ -147,31 +147,257 @@ class Pemesanan extends CI_Controller {
 		$this->load->view('static/footer_view');
 	}
 
+    public function penjadwalan($qty, $perencanaan, $machine, $welding, $pengadaan, $quality, $packing, $distribusi)
+    {
+        $dateNow = date('Y-m-d');
+
+        $lipat = 0;
+        $lipatPengadaan = 1;
+        $lipatQuality = 1;
+        $lipatPacking = 1;
+        $lipatDistribusi = 1;
+        for ($i=0; $i < $qty ; $i+= 25) { 
+            $lipat++;
+            $lipatPengadaan = $lipatPengadaan + $pengadaan;
+            $lipatQuality = $lipatQuality + $quality;
+            $lipatPacking = $lipatPacking + $packing;
+            $lipatDistribusi = $lipatDistribusi + $distribusi;
+        }
+
+        $perencanaan_bb_awal = $dateNow;
+        $perencanaan_bb_lama = $perencanaan;
+        $perencanaan_bb_akhir = date("Y-m-d", strtotime("$perencanaan_bb_awal +$perencanaan_bb_lama day"));
+
+        $lamaPengadaan = $lipatPengadaan - 1;
+        $pengadaan_bb_awal = $perencanaan_bb_akhir;
+        $pengadaan_bb_akhir = date("Y-m-d", strtotime("$pengadaan_bb_awal +$lamaPengadaan day"));
+
+        $lamaMachining = $lipat*$machine;
+        $proses_machining_awal = $pengadaan_bb_akhir;
+        $proses_machining_akhir = date("Y-m-d", strtotime("$proses_machining_awal +$lamaMachining day"));
+
+        $lamaWelding = $lipat*$welding;
+        $proses_welding_awal = $proses_machining_akhir;
+        $proses_welding_akhir = date("Y-m-d", strtotime("$proses_welding_awal +$lamaWelding day"));
+
+        $lamaQuality = $lipatQuality - 1;
+        $quality_control_awal = $proses_welding_akhir;
+        $quality_control_akhir = date("Y-m-d", strtotime("$quality_control_awal +$lamaQuality day"));
+
+        $lamaPacking = $lipatPacking - 1;
+        $packing_awal = $quality_control_akhir;
+        $packing_akhir = date("Y-m-d", strtotime("$quality_control_akhir +$lamaPacking day"));
+
+        $lamaDistribusi = $lipatDistribusi - 1;
+        $distribusi_awal = $packing_akhir;
+        $distribusi_akhir = date("Y-m-d", strtotime("$distribusi_awal +$lamaDistribusi day"));
+
+        $data = array(  'dateNow'                   => $dateNow,
+                        'start_pemesanan'           => $proses_machining_awal,
+                        'jadwal_produksi'           => $proses_machining_awal,
+                        'jadwal_distribusi'         => $distribusi_awal,
+                        'delivery_pemesanan'        => $distribusi_awal,
+                        'perencanaan_bb_lama'       => $perencanaan_bb_lama,
+                        'perencanaan_bb_awal'       => $perencanaan_bb_awal,
+                        'perencanaan_bb_akhir'      => $perencanaan_bb_akhir,
+                        'pengadaan_bb_lama'         => $lamaPengadaan,
+                        'pengadaan_bb_awal'         => $pengadaan_bb_awal,
+                        'pengadaan_bb_akhir'        => $pengadaan_bb_akhir,
+                        'machining_lama'            => $lamaMachining,
+                        'machining_awal'            => $proses_machining_awal,
+                        'machining_akhir'           => $proses_machining_akhir,
+                        'welding_lama'              => $lamaWelding,
+                        'welding_awal'              => $proses_welding_awal,
+                        'welding_akhir'             => $proses_welding_akhir,
+                        'quality_control_lama'      => $lamaQuality,
+                        'quality_control_awal'      => $quality_control_awal,
+                        'quality_control_akhir'     => $quality_control_akhir,
+                        'packing_lama'              => $lamaPacking,
+                        'packing_awal'              => $packing_awal,
+                        'packing_akhir'             => $packing_akhir,
+                        'distribusi_lama'           => $lamaDistribusi,
+                        'distribusi_awal'           => $distribusi_awal,
+                        'distribusi_akhir'          => $distribusi_akhir
+                );
+
+        return $data;
+    }
+
 	public function proses_tambah()
     {
         //generate No Pembayaran
         $cek = $this->pelanggan->getPembayaran()->num_rows() + 1;
         $no_pembayaran = 'AC240' . $cek;
         $no_pesanan = 'T00' . $cek;
+        $nama_produk = $this->input->post('nama_produk');
+        $qty = $this->input->post('qty');
+
+        switch ($nama_produk) {
+            case 'Conveyor':
+
+                 $perencanaan = 3;
+                 $machine = 5;
+                 $welding = 5;
+                 $pengadaan = 1;
+                 $quality = 2;
+                 $packing = 1;
+                 $distribusi = 4;
+
+                 $proses_jadwal = $this->penjadwalan($qty, $perencanaan, $machine, $welding, $pengadaan, $quality, $packing, $distribusi);
+
+            break;
+
+            case 'Fish Feeder':
+
+                 $perencanaan = 1;
+                 $machine = 6;
+                 $welding = 6;
+                 $pengadaan = 3;
+                 $quality = 1;
+                 $packing = 1;
+                 $distribusi = 6;
+
+                 $proses_jadwal = $this->penjadwalan($qty, $perencanaan, $machine, $welding, $pengadaan, $quality, $packing, $distribusi);
+
+                break;
+            
+            default:
+
+                 $perencanaan = 3;
+                 $machine = 5;
+                 $welding = 5;
+                 $pengadaan = 4;
+                 $quality = 1;
+                 $packing = 1;
+                 $distribusi = 2;
+
+                 $proses_jadwal = $this->penjadwalan($qty, $perencanaan, $machine, $welding, $pengadaan, $quality, $packing, $distribusi);
+
+                break;
+        }
+
+
+
+        // echo "<pre>";
+        // print_r($proses_jadwal);
+        // echo "</pre>";
 
         $data = array(
             'nomor_pesanan' 	=> $no_pesanan,
             'id_pelanggan' 	    => $this->input->post('id_pelanggan'),
             'id_kategori' 		=> $this->input->post('id_kategori'),
-            'nama_produk' 		=> $this->input->post('nama_produk'),
-            'qty' 				=> $this->input->post('qty'),
-            'tgl_pesan' 		=> date('Y-m-d'),
+            'nama_produk' 		=> $nama_produk,
+            'qty' 				=> $qty,
+            'tgl_pesan' 		=> $proses_jadwal['dateNow'],
+            'lama_whelding'     => $proses_jadwal['machining_lama'],
+            'lama_mashining'    => $proses_jadwal['welding_lama'],
             'id_status_pesan'   => 1,
             'id_proses' 		=> 7,
+            'delivery_pemesanan'=> $proses_jadwal['delivery_pemesanan'],
+            'jadwal_produksi'   => $proses_jadwal['jadwal_produksi'],
+            'jadwal_distribusi' => $proses_jadwal['jadwal_distribusi'],
+            'start_pemesanan'   => $proses_jadwal['start_pemesanan'],
         );
         $tambahpesanan = $this->pelanggan->tambahpesanan($data);
 
-        $data = array(
+        $taskPerencanaan = array(
+            'order_id'              => $no_pesanan,
+            'name'                  => 'PERENCANAAN BAHAN BAKU',
+            'start'                 => $proses_jadwal['perencanaan_bb_awal'],
+            'end'                   => $proses_jadwal['perencanaan_bb_akhir'],
+            'parent_id'             => null,
+            'milestone'             => 0,
+            'ordinal'               => 1,
+            'ordinal_priority'      => $proses_jadwal['dateNow'],
+            'complete'              => 100
+        );
+
+        $taskPengadaan = array(
+            'order_id'              => $no_pesanan,
+            'name'                  => 'PENGADAAN BAHAN BAKU',
+            'start'                 => $proses_jadwal['pengadaan_bb_awal'],
+            'end'                   => $proses_jadwal['pengadaan_bb_akhir'],
+            'parent_id'             => null,
+            'milestone'             => 0,
+            'ordinal'               => 2,
+            'ordinal_priority'      => $proses_jadwal['dateNow'],
+            'complete'              => 100
+        );
+
+        $taskMachining = array(
+            'order_id'              => $no_pesanan,
+            'name'                  => 'PROSES MACHINING',
+            'start'                 => $proses_jadwal['machining_awal'],
+            'end'                   => $proses_jadwal['machining_akhir'],
+            'parent_id'             => null,
+            'milestone'             => 0,
+            'ordinal'               => 3,
+            'ordinal_priority'      => $proses_jadwal['dateNow'],
+            'complete'              => 100
+        );
+
+        $taskWelding = array(
+            'order_id'              => $no_pesanan,
+            'name'                  => 'PROSES WELDING',
+            'start'                 => $proses_jadwal['welding_awal'],
+            'end'                   => $proses_jadwal['welding_akhir'],
+            'parent_id'             => null,
+            'milestone'             => 0,
+            'ordinal'               => 4,
+            'ordinal_priority'      => $proses_jadwal['dateNow'],
+            'complete'              => 100
+        );
+
+        $taskQuality = array(
+            'order_id'              => $no_pesanan,
+            'name'                  => 'QUALITY CONTROL',
+            'start'                 => $proses_jadwal['quality_control_awal'],
+            'end'                   => $proses_jadwal['quality_control_akhir'],
+            'parent_id'             => null,
+            'milestone'             => 0,
+            'ordinal'               => 5,
+            'ordinal_priority'      => $proses_jadwal['dateNow'],
+            'complete'              => 100
+        );
+
+        $taskPacking = array(
+            'order_id'              => $no_pesanan,
+            'name'                  => 'PACKING',
+            'start'                 => $proses_jadwal['packing_awal'],
+            'end'                   => $proses_jadwal['packing_akhir'],
+            'parent_id'             => null,
+            'milestone'             => 0,
+            'ordinal'               => 6,
+            'ordinal_priority'      => $proses_jadwal['dateNow'],
+            'complete'              => 100
+        );
+
+        $taskDistribusi = array(
+            'order_id'              => $no_pesanan,
+            'name'                  => 'DISTRIBUSI',
+            'start'                 => $proses_jadwal['distribusi_awal'],
+            'end'                   => $proses_jadwal['distribusi_akhir'],
+            'parent_id'             => null,
+            'milestone'             => 0,
+            'ordinal'               => 7,
+            'ordinal_priority'      => $proses_jadwal['dateNow'],
+            'complete'              => 100
+        );
+
+        $this->pemesanan->input_gantt($taskPerencanaan);
+        $this->pemesanan->input_gantt($taskPengadaan);
+        $this->pemesanan->input_gantt($taskMachining);
+        $this->pemesanan->input_gantt($taskWelding);
+        $this->pemesanan->input_gantt($taskQuality);
+        $this->pemesanan->input_gantt($taskPacking);
+        $this->pemesanan->input_gantt($taskDistribusi);
+
+        $dataPembayaran = array(
             'nomor_pesanan' => $no_pesanan,
             'no_pembayaran' => $no_pembayaran,
             'status' => 1
         );
-        $tambahpesanan = $this->pelanggan->insertPembayaran($data);
+        $tambahpesanan = $this->pelanggan->insertPembayaran($dataPembayaran);
 
         if ($tambahpesanan && $tambahpesanan) {
         	$this->session->set_flashdata('message1', '
@@ -224,11 +450,13 @@ class Pemesanan extends CI_Controller {
                 'nama_status_pesan'         => set_value('nama_status_pesan', $row->nama_status_pesan),
                 'nama_status_proses'        => set_value('nama_status_proses', $row->nama_status_proses),
                 'total_pembayaran'          => set_value('total_pembayaran', $row->total_pembayaran),
+                'start_pemesanan'           => set_value('start_pemesanan', $row->start_pemesanan),
+                'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
             );
 
-            $this->load->view('static/header_view');
-            $this->load->view('pemesanan/pemesanan_detail_order', $data);
-            $this->load->view('static/footer_view');
+            $this->load->view('static/header_login');
+            $this->load->view('pemesanan/pemesanan_detail_order_new', $data);
+            $this->load->view('static/footer_login');
         } else {
             $this->session->set_flashdata('message1', '
             <div class="alert alert-danger alert-dismissible" role="alert">

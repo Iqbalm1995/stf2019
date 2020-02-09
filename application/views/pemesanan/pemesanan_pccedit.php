@@ -58,10 +58,6 @@
 	            	<h3>Keterangan Proses Pesanan</h3>
 	            	<table width="100%">
 	            		<tr>
-	            			<td width="30%">Estimasi Bahan Baku</td>
-	            			<td>: <strong><?=(!empty($hitung_waktu) ? $hitung_waktu." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
 	            			<td width="30%">Lama Welding</td>
 	            			<td>: <strong><?=(!empty($lama_whelding) ? $lama_whelding." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
 	            		</tr>
@@ -101,7 +97,7 @@
 	            	<hr>
 	            	<h3>Verifikasi Pesanan</h3>
 	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
-					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>">
+					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>" required>
 					  	<?php 	$this->db->where('id_proses', '1');
 							  	$status_proses = $this->db->get('status_proses')->result(); ?>
 
@@ -116,23 +112,13 @@
 	                            </optgroup>
 	                        </select>
 	                    </div>
-
-	                    <div class="form-group">
-	                    	<label><i><b>Estimasi Bahan Baku</b></i></label>
-		                    <div class="input-group mb-3">
-							  <input type="number" name="hitung_waktu" class="form-control" placeholder="Lama Estimasi Bahan Baku" value="<?=($hitung_waktu ? $hitung_waktu : '') ?>">
-							  <div class="input-group-append">
-							    <span class="input-group-text" id="basic-addon2">Hari</span>
-							  </div>
-							</div>
-						</div>
 	                    <div class="form-group">
 	                    	<label><i><b>Total Pembayaran</b></i></label>
 		                    <div class="input-group">
 							  <div class="input-group-prepend">
 							    <span class="input-group-text">Rp.</span>
 							  </div>
-							  <input type="text" name="total_pembayaran" name="total_pembayaran" class="form-control" placeholder="Total Pembayaran" value="<?=(($total_pembayaran) ? $total_pembayaran : '') ?>">
+							  <input type="text" name="total_pembayaran" name="total_pembayaran" class="form-control" placeholder="Total Pembayaran" value="<?=(($total_pembayaran) ? $total_pembayaran : '') ?>" required>
 							  <div class="input-group-append">
 							    <span class="input-group-text">.00</span>
 							  </div>
@@ -190,7 +176,7 @@
 		            </table>
 	            	<hr>
 	            	<h3>Penjadwalan Gantt Chart</h3>
-	            	<a href="<?=base_url('pemesanan/gantt_view/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
+	            	<a href="<?=base_url('pemesanan/gantt_view/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
 	            </div>
 	        </div>
 

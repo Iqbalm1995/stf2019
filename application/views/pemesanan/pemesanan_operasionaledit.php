@@ -62,10 +62,6 @@
 	            			<td>: <strong><?=(!empty($jadwal_distribusi) ? $jadwal_distribusi : '(Belum Ada Estimasi Waktu)') ?></strong></td>
 	            		</tr>
 	            		<tr>
-	            			<td width="30%">Estimasi Bahan Baku</td>
-	            			<td>: <strong><?=(!empty($hitung_waktu) ? $hitung_waktu." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
 	            			<td width="30%">Lama Welding</td>
 	            			<td>: <strong><?=(!empty($lama_whelding) ? $lama_whelding." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
 	            		</tr>
@@ -105,14 +101,14 @@
 	            	<hr>
 	            	<h3>Verifikasi Pesanan</h3>
 	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
-					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>">
+					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>" required>
 					  	<?php 	$params = array('5', '6', '8');
 					  			$this->db->where_in('id_proses', $params);
 							  	$status_proses = $this->db->get('status_proses')->result(); ?>
 
 						<div class="form-group">
 							<label><i><b>Jadwal Distribusi</b></i></label>
-							<input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" name="jadwal_distribusi" placeholder="YYYY-MM-DD" value="<?=$jadwal_distribusi;?>">
+							<input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="jadwal_distribusi" placeholder="YYYY-MM-DD" value="<?=$jadwal_distribusi;?>" required readonly>
 						</div>
 
 						<div class="form-group">
@@ -132,7 +128,7 @@
 		            	
 		            	<hr>
 		            	<h3>Penjadwalan Gantt Chart</h3>
-		            	<a href="<?=base_url('pemesanan/gantt_view/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
+		            	<a href="<?=base_url('pemesanan/gantt_view/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
 					</form>
 	            </div>
 	        </div>

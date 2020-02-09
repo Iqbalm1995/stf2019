@@ -1,0 +1,59 @@
+      <div class="content">
+        <div class="row">
+          <div class="offset-md-2 col-md-8 offset-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title text-center pt-4">Register Pelanggan</h5>
+              </div>
+              <div class="card-body">
+                <form class="user" method="post" action="<?=base_url();?>/login/proses_register">
+                  <div class="row">
+                    <div class="offset-md-2 col-md-8 offset-md-2">
+                      <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" class="form-control" name="nama_pelanggan"  placeholder="Masukan Nama Lengkap..." required>
+                      </div>
+                    </div>
+                    <div class="offset-md-2 col-md-8 offset-md-2">
+                      <div class="form-group">
+                        <label>No. HP</label>
+                        <input type="text" class="form-control" name="no_hp"  placeholder="Masukan No. HP..." required>
+                      </div>
+                    </div>
+                    <div class="offset-md-2 col-md-8 offset-md-2">
+                      <div class="form-group">
+                        <label>Alamat</label>
+                        <input type="text" class="form-control" name="alamat"  placeholder="Masukan Alamat..." required>
+                      </div>
+                    </div>
+                    <div class="offset-md-2 col-md-8 offset-md-2">
+                      <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username"  placeholder="Masukan Username..." required>
+                      </div>
+                    </div>
+                    <div class="offset-md-2 col-md-8 offset-md-2">
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Masukan Password..." required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-3">
+                    <div class="offset-md-2 col-md-8 offset-md-2">
+                      <button type="submit" class="btn btn-lg btn-primary btn-block" style="border-radius: 50px;">
+                        Login
+                      </button>
+                      <br>
+                      <div class="text-center pb-2">
+                        <a class="small" href="<?=base_url();?>login/pelanggan">Sudah Mempunyai Akun? Login!</a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      

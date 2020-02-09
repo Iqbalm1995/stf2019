@@ -20,12 +20,16 @@ class Login extends CI_Controller {
 	public function pelanggan()
 	{
 		$data = array('mode' => 'Pelanggan', 'action' => base_url('login/do_login_pelanggan'));
-        $this->load->view('login/login_view', $data);
+        $this->load->view('static/header_login');
+        $this->load->view('login/login_new', $data);
+        $this->load->view('static/footer_login');
 	}
 
 	public function daftar()
 	{
-        $this->load->view('login/register_view');
+        $this->load->view('static/header_login');
+        $this->load->view('login/register_new');
+        $this->load->view('static/footer_login');
 	}
 
 	public function proses_register()
@@ -69,7 +73,7 @@ class Login extends CI_Controller {
 					'status_login' 		=> "loginactive"
 				);
 				$this->session->set_userdata($data_session);
-            	redirect(base_url().'dashboard');
+            	redirect(base_url().'home');
             }else{
             	$this->session->set_flashdata('pesan2', '
 				<div class="alert alert-warning alert-dismissible show fade">

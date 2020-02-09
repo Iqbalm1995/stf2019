@@ -62,10 +62,6 @@
 	            			<td>: <strong><?=(!empty($jadwal_produksi) ? $jadwal_produksi : '(Belum Ada Estimasi Waktu)') ?></strong></td>
 	            		</tr>
 	            		<tr>
-	            			<td width="30%">Estimasi Bahan Baku</td>
-	            			<td>: <strong><?=(!empty($hitung_waktu) ? $hitung_waktu." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
 	            			<td width="30%">Lama Welding</td>
 	            			<td>: <strong><?=(!empty($lama_whelding) ? $lama_whelding." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
 	            		</tr>
@@ -105,17 +101,10 @@
 	            	<hr>
 	            	<h3>Verifikasi Pesanan</h3>
 	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
-					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>">
+					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>" required>
 					  	<?php 	$params = array('2', '3', '4');
 					  			$this->db->where_in('id_proses', $params);
 							  	$status_proses = $this->db->get('status_proses')->result(); ?>
-
-						
-
-						<div class="form-group">
-	                        <label><i><b>Jadwal Produksi</b></i></label>
-	                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" name="jadwal_produksi" placeholder="YYYY-MM-DD" value="<?=$jadwal_produksi;?>">
-	                    </div>
 
 						<div class="form-group">
 	                        <label><i><b>Status Proses</b></i></label>
@@ -129,10 +118,15 @@
 	                        </select>
 	                    </div>
 
+						<div class="form-group">
+	                        <label><i><b>Jadwal Produksi</b></i></label>
+	                        <input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="jadwal_produksi" placeholder="YYYY-MM-DD" value="<?=$jadwal_produksi;?>" required readonly>
+	                    </div>
+
 	                    <div class="form-group">
 	                    	<label><i><b>Estimasi Lama Welding</b></i></label>
 		                    <div class="input-group mb-3">
-							  <input type="number" name="lama_whelding" class="form-control" placeholder="Lama Estimasi Bahan Baku" value="<?=($lama_whelding ? $lama_whelding : '') ?>">
+							  <input type="number" name="lama_whelding" class="form-control" placeholder="Lama Estimasi Bahan Baku" value="<?=($lama_whelding ? $lama_whelding : '') ?>" required readonly>
 							  <div class="input-group-append">
 							    <span class="input-group-text" id="basic-addon2">Hari</span>
 							  </div>
@@ -142,7 +136,7 @@
 						<div class="form-group">
 	                    	<label><i><b>Estimasi Lama Machine</b></i></label>
 		                    <div class="input-group mb-3">
-							  <input type="number" name="lama_mashining" class="form-control" placeholder="Lama Estimasi Bahan Baku" value="<?=($lama_mashining ? $lama_mashining : '') ?>">
+							  <input type="number" name="lama_mashining" class="form-control" placeholder="Lama Estimasi Bahan Baku" value="<?=($lama_mashining ? $lama_mashining : '') ?>" required readonly>
 							  <div class="input-group-append">
 							    <span class="input-group-text" id="basic-addon2">Hari</span>
 							  </div>
@@ -154,7 +148,7 @@
 		            	
 		            	<hr>
 		            	<h3>Penjadwalan Gantt Chart</h3>
-		            	<a href="<?=base_url('pemesanan/gantt_view/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
+		            	<a href="<?=base_url('pemesanan/gantt_view/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
 					</form>
 	            </div>
 	        </div>

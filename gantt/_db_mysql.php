@@ -120,11 +120,11 @@ function db_update_task_full($id, $start, $end, $name, $complete, $milestone) {
 function db_get_tasks($parent) {
     global $db;
 
-    $str = 'SELECT * FROM task WHERE parent_id = :parent AND order_id = "'.$_GET['order_id'].'" ORDER BY ordinal, ordinal_priority desc';
+    $str = 'SELECT * FROM task WHERE parent_id = :parent AND order_id = "'.$_GET['nomor_pesanan'].'" ORDER BY ordinal, ordinal_priority desc';
     if ($parent == null) {
         $str = str_replace("= :parent", "is null", $str);
         $stmt = $db->prepare($str);
-        $stmt->bindParam(':order_id', $_GET['order_id']);
+        $stmt->bindParam(':order_id', $_GET['nomor_pesanan']);
     }
     else {
         $stmt = $db->prepare($str);

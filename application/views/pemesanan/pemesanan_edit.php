@@ -66,10 +66,6 @@
 	            			<td>: <strong><?=(!empty($delivery_pemesanan) ? $delivery_pemesanan : '(Belum ada estimasi tanggal oleh marketing)') ?></strong></td>
 	            		</tr>
 	            		<tr>
-	            			<td width="30%">Estimasi Bahan Baku</td>
-	            			<td>: <strong><?=(!empty($hitung_waktu) ? $hitung_waktu." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
 	            			<td width="30%">Lama Welding</td>
 	            			<td>: <strong><?=(!empty($lama_whelding) ? $lama_whelding." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
 	            		</tr>
@@ -127,12 +123,12 @@
 
 	                    <div class="form-group">
 	                        <label><i><b>Start Pemesanan</b></i></label>
-	                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" name="start_pemesanan" placeholder="YYYY-MM-DD" value="<?=$start_pemesanan;?>">
+	                        <input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="start_pemesanan" placeholder="YYYY-MM-DD" value="<?=$start_pemesanan;?>" required readonly>
 	                    </div>
 
 	                    <div class="form-group">
 	                        <label><i><b>Delivery Pemesanan</b></i></label>
-	                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" name="delivery_pemesanan" placeholder="YYYY-MM-DD" value="<?=$delivery_pemesanan;?>">
+	                        <input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="delivery_pemesanan" placeholder="YYYY-MM-DD" value="<?=$delivery_pemesanan;?>" required readonly>
 	                    </div>
 
 	                    <div class="form-group">
@@ -147,7 +143,7 @@
 					</form>
 	            	<hr>
 	            	<h3>Penjadwalan Gantt Chart</h3>
-	            	<a href="<?=base_url('pemesanan/gantt/'.$id_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Atur Gantt Chart</a>
+	            	<a href="<?=base_url('pemesanan/gantt/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Atur Gantt Chart</a>
 	            </div>
 	        </div>
 

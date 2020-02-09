@@ -68,7 +68,8 @@
                           <?php
                             if ($role == 'Marketing') { ?>
                               <a href="<?= base_url('pemesanan/edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a> 
-                              <a href="<?= base_url('pemesanan/hapus/'.$r->id_pesanan); ?>">[Hapus]</a>
+                              <a href="#" onclick="hapusData(<?= $r->id_pesanan; ?>)">[Hapus]</a>
+                              <!-- <a href="<?= base_url('pemesanan/hapus/'.$r->id_pesanan); ?>">[Hapus]</a> -->
                           <?php }elseif ($role == 'Ppc') { ?>
                               <a href="<?= base_url('pemesanan/pcc_edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a>
                           <?php }elseif ($role == 'Produksi') {  ?>
@@ -97,5 +98,15 @@
           $(document).ready(function() {
             $('#dataTable').DataTable();
           });
+
+          function hapusData(id) {
+            var r = confirm("Yakin akan hapus data ini");
+            if (r == true) {
+              location.replace("<?php echo base_url('pemesanan/hapus/')?>" + id )
+            } else {
+              alert("Data tidak jadi dihapus")
+            }
+          }
+
         </script>
         <!-- End Script Data Tabel -->
