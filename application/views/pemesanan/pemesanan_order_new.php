@@ -1,6 +1,20 @@
-      <div class="content">
+      <!-- Page Content -->
+      <div class="container pt-5">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">Detail Pemesanan
+        </h1>
+
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#l">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Detail Pemesanan</li>
+        </ol>
+
+
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 pb-4">
             <div class="card">
               <div class="card-header">
                 <h5 class="title text-center pt-4">Data Pemesanan Anda</h5>
@@ -13,7 +27,7 @@
               <div class="card-body m-4">
                 <div class="row">
                   <div class="table-responsive">
-                    <table class="table table-sm" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
                           <th width="5%">No.</th>
@@ -55,7 +69,9 @@
             </div>
           </div>
         </div>
+
       </div>
+      <!-- /.container -->
 
         <!-- Script Data Tabel -->
         <script type="text/javascript">

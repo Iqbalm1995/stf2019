@@ -31,9 +31,9 @@ class Pemesanan extends CI_Controller {
         $id = $this->session->userdata('id_user');
         $data['pemesanan'] = $this->pemesanan->tampil_data_order($id);
 
-        $this->load->view('static/header_login');
+        $this->load->view('static/header');
         $this->load->view('pemesanan/pemesanan_order_new', $data);
-        $this->load->view('static/footer_login');
+        $this->load->view('static/footer');
     }
 
     public function gantt($nomor_pesanan)
@@ -119,9 +119,9 @@ class Pemesanan extends CI_Controller {
         $data['kategori'] = $this->kategori->tampil_data();
         $data['produk'] = $this->pemesanan->tampil_produk();
 
-        $this->load->view('static/header_login');
+        $this->load->view('static/header');
         $this->load->view('pemesanan/pemesanan_form_order_new', $data);
-        $this->load->view('static/footer_login');
+        $this->load->view('static/footer');
     }
 
 	public function tambah_data()
@@ -454,9 +454,9 @@ class Pemesanan extends CI_Controller {
                 'delivery_pemesanan'        => set_value('delivery_pemesanan', $row->delivery_pemesanan),
             );
 
-            $this->load->view('static/header_login');
+            $this->load->view('static/header');
             $this->load->view('pemesanan/pemesanan_detail_order_new', $data);
-            $this->load->view('static/footer_login');
+            $this->load->view('static/footer');
         } else {
             $this->session->set_flashdata('message1', '
             <div class="alert alert-danger alert-dismissible" role="alert">

@@ -1,6 +1,19 @@
-      <div class="content">
+      <!-- Page Content -->
+      <div class="container pt-5">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">Detail Pemesanan
+        </h1>
+
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#l">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Detail Pemesanan</li>
+        </ol>
+
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 pb-4">
             <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Data Pemesanan</h1>
           <hr>
@@ -116,7 +129,9 @@
           </div>
           </div>
         </div>
+
       </div>
+      <!-- /.container -->
 
         <!-- Script Data Tabel -->
         <script type="text/javascript">

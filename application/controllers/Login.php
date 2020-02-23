@@ -20,16 +20,12 @@ class Login extends CI_Controller {
 	public function pelanggan()
 	{
 		$data = array('mode' => 'Pelanggan', 'action' => base_url('login/do_login_pelanggan'));
-        $this->load->view('static/header_login');
-        $this->load->view('login/login_new', $data);
-        $this->load->view('static/footer_login');
+        $this->load->view('login/login_view', $data);
 	}
 
 	public function daftar()
 	{
-        $this->load->view('static/header_login');
-        $this->load->view('login/register_new');
-        $this->load->view('static/footer_login');
+        $this->load->view('login/register_view');
 	}
 
 	public function proses_register()
