@@ -12,92 +12,8 @@
 	            	<h6 class="m-0 font-weight-bold text-primary">Form Pemesanan</h6>
 	            </div>
 	            <div class="offset-md-2 col-md-8 offset-md-2 card-body">
-	            	<table width="100%">
-	            		<tr>
-	            			<td width="30%">Nama Pemesan</td>
-	            			<td>: <?=$nama_pelanggan;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Kategori Pemesan</td>
-	            			<td>: <?=$nama_kategori;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Alamat</td>
-	            			<td>: <?=$alamat;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">No Hp</td>
-	            			<td>: <?=$no_hp;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">No Pesanan</td>
-	            			<td>: <?=$nomor_pesanan;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Produk Pemesan</td>
-	            			<td>: <?=$nama_produk;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Qty</td>
-	            			<td>: <?=$qty;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Tanggal Pesan</td>
-	            			<td>: <?=$tgl_pesan;?></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Status Order</td>
-	            			<td>: <strong><?=$nama_status_pesan;?></strong></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Status Proses</td>
-	            			<td>: <strong><?=$nama_status_proses;?></strong></td>
-	            		</tr>
-	            	</table>
-	            	<hr>
-	            	<h3>Keterangan Proses Pesanan</h3>
-	            	<table width="100%">
-						<tr>
-	            			<td width="30%">Jadwal Distribusi</td>
-	            			<td>: <strong><?=(!empty($jadwal_distribusi) ? $jadwal_distribusi : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Lama Welding</td>
-	            			<td>: <strong><?=(!empty($lama_whelding) ? $lama_whelding." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
-	            			<td width="30%">Lama Machining</td>
-	            			<td>: <strong><?=(!empty($lama_mashining) ? $lama_mashining." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
-	            		</tr>
-	            		<tr>
-	            			<td colspan="2" class="text-right pt-4">
-	            				<h4><strong>Biaya Estimasi</strong> : Rp. <?=(!empty($total_pembayaran) ? number_format($total_pembayaran, 0 , '' , '.' )." .00" : '-') ?></h4>
-	            			</td>
-	            		</tr>
-	            	</table>
-	            	<hr>
-	            	<h3>Konfirmasi Pembayaran</h3>
-	            	<?php 
-	            		$cekPembayaran = $this->pemesanan->getPembayaran($nomor_pesanan);
-	            		$gbr_bukti = $cekPembayaran->bukti;;
-
-	            		if ($cekPembayaran->status == 1 && $cekPembayaran->bukti == null) { ?>
-
-		            	<div class="alert alert-warning" role="alert">
-			              <strong>Perhatian <i class="glyphicon glyphicon-ok"></i></strong> Pelanggan Belum Melakukan Pembayaran!
-			            </div>
-	            	<?php }else{ ?>
-	            		<table width="100%" class="table">
-	            			<tr>
-	            				<td width="50%">
-	            					<img src="<?=base_url('upload_file/'. $gbr_bukti)?>" style="max-height: 500px; max-width: 500px" >
-	            				</td>
-	            				<td>
-	            					<h4 class="text-success">Pembayaran sudah dilakukan</h4>
-	            				</td>
-	            			</tr>
-	            		</table>
-	            	<?php } ?>
+	            	<h3>Penjadwalan Gantt Chart</h3>
+	            	<a href="<?=base_url('pemesanan/gantt_view/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
 	            	<hr>
 	            	<h3>Verifikasi Pesanan</h3>
 	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
@@ -127,8 +43,95 @@
 					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-save"></i> Simpan Konfirmasi Pesanan</button>
 		            	
 		            	<hr>
-		            	<h3>Penjadwalan Gantt Chart</h3>
-		            	<a href="<?=base_url('pemesanan/gantt_view/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Lihat Gantt Chart</a>
+		            	<h3>Konfirmasi Pembayaran</h3>
+		            	<?php 
+		            		$cekPembayaran = $this->pemesanan->getPembayaran($nomor_pesanan);
+		            		$gbr_bukti = $cekPembayaran->bukti;;
+
+		            		if ($cekPembayaran->status == 1 && $cekPembayaran->bukti == null) { ?>
+
+			            	<div class="alert alert-warning" role="alert">
+				              <strong>Perhatian <i class="glyphicon glyphicon-ok"></i></strong> Pelanggan Belum Melakukan Pembayaran!
+				            </div>
+		            	<?php }else{ ?>
+		            		<table width="100%" class="table">
+		            			<tr>
+		            				<td width="50%">
+		            					<img src="<?=base_url('upload_file/'. $gbr_bukti)?>" style="max-height: 500px; max-width: 500px" >
+		            				</td>
+		            				<td>
+		            					<h4 class="text-success">Pembayaran sudah dilakukan</h4>
+		            				</td>
+		            			</tr>
+		            		</table>
+		            	<?php } ?>
+		            	<hr>
+	            		<h3>Detail Pemesanan</h3>
+		            	<table width="100%">
+		            		<tr>
+		            			<td width="30%">Nama Pemesan</td>
+		            			<td>: <?=$nama_pelanggan;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Kategori Pemesan</td>
+		            			<td>: <?=$nama_kategori;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Alamat</td>
+		            			<td>: <?=$alamat;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">No Hp</td>
+		            			<td>: <?=$no_hp;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">No Pesanan</td>
+		            			<td>: <?=$nomor_pesanan;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Produk Pemesan</td>
+		            			<td>: <?=$nama_produk;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Qty</td>
+		            			<td>: <?=$qty;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Tanggal Pesan</td>
+		            			<td>: <?=$tgl_pesan;?></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Status Order</td>
+		            			<td>: <strong><?=$nama_status_pesan;?></strong></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Status Proses</td>
+		            			<td>: <strong><?=$nama_status_proses;?></strong></td>
+		            		</tr>
+		            	</table>
+		            	<hr>
+		            	<h3>Keterangan Proses Pesanan</h3>
+		            	<table width="100%">
+							<tr>
+		            			<td width="30%">Jadwal Distribusi</td>
+		            			<td>: <strong><?=(!empty($jadwal_distribusi) ? $jadwal_distribusi : '(Belum Ada Estimasi Waktu)') ?></strong></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Lama Welding</td>
+		            			<td>: <strong><?=(!empty($lama_whelding) ? $lama_whelding." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
+		            		</tr>
+		            		<tr>
+		            			<td width="30%">Lama Machining</td>
+		            			<td>: <strong><?=(!empty($lama_mashining) ? $lama_mashining." Hari" : '(Belum Ada Estimasi Waktu)') ?></strong></td>
+		            		</tr>
+		            		<tr>
+		            			<td colspan="2" class="text-right pt-4">
+	            				<hr>
+		            				<h4><strong>Biaya Estimasi</strong> : Rp. <?=(!empty($total_pembayaran) ? number_format($total_pembayaran, 0 , '' , '.' )." .00" : '-') ?></h4>
+		            			</td>
+		            		</tr>
+		            	</table>
+	            		<div class="pb-5 mb-5"></div>
 					</form>
 	            </div>
 	        </div>

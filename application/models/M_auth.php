@@ -3,9 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_auth extends CI_Model {
 
 	function getUserByLogin($uname, $pass) { 
-		$this->db->select("user.*, level.*");
-	    $this->db->from('user'); 
-	    $this->db->join('level', 'level.id_level = user.id_level');      
+		$this->db->select("*");
+	    $this->db->from('user');     
 	    $this->db->where('user.username', $uname);
 	    $result = $this->getUsers($pass);
 
@@ -44,16 +43,6 @@ class M_auth extends CI_Model {
 	    } else {
 	        return array();
 	    }
-	}
-
-	function getNamaPuskesmas($id)
-	{
-		$this->db->select("nama_level");
-		$this->db->from('level'); 
-		$this->db->where('id_level', $id);
-		$query = $this->db->get();
-		$result = $query->row();
-		return $result;
 	}
 
 }

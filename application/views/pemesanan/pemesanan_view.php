@@ -43,9 +43,17 @@
                   <tbody>
                     <?php 
                       $no = 1;
+                      $today = new DateTime(date('Y-m-d'));
+                      
                       foreach($pemesanan as $r){ 
+                      $date_order = new DateTime($r->tgl_pesan);
+                      if (($date_order < $today) && ($r->nama_status_pesan == 'Menunggu') && ($r->nama_status_proses == 'Menunggu Pembayaran')) {
+                        $expired_order = 'class="table-danger"';
+                      }else{
+                        $expired_order = '';
+                      }
                     ?>
-                      <tr>
+                      <tr <?= $expired_order ?>>
                         <td class="text-center"><?= $no++ ?></td>
                         <td><strong><?= $r->nama_pelanggan ?></strong></td>
                         <td><?= $r->nama_kategori ?></td>
@@ -59,7 +67,7 @@
                           <?php if ($role == 'Marketing') { ?>
                               <td class="text-center"><small><strong><?=(!empty($r->jadwal_produksi) ? $r->jadwal_produksi : '-') ?></strong></small></td>
                               <td class="text-center"><small><strong><?=(!empty($r->jadwal_distribusi) ? $r->jadwal_distribusi : '-') ?></strong></small></td>
-                          <?php }elseif ($role == 'Produksi') {  ?>
+                          <?php }elseif ($role == 'Produksi' || $role == 'QC') {  ?>
                               <td class="text-center"><small><strong><?=(!empty($r->jadwal_produksi) ? $r->jadwal_produksi : '-') ?></strong></small></td>
                           <?php }elseif ($role == 'Operasional') {  ?>
                               <td class="text-center"><small><strong><?=(!empty($r->jadwal_distribusi) ? $r->jadwal_distribusi : '-') ?></strong></small></td>
@@ -72,7 +80,7 @@
                               <!-- <a href="<?= base_url('pemesanan/hapus/'.$r->id_pesanan); ?>">[Hapus]</a> -->
                           <?php }elseif ($role == 'Ppc') { ?>
                               <a href="<?= base_url('pemesanan/pcc_edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a>
-                          <?php }elseif ($role == 'Produksi') {  ?>
+                          <?php }elseif ($role == 'Produksi' || $role == 'QC') {  ?>
                               <a href="<?= base_url('pemesanan/produksi_edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a>
                           <?php }elseif ($role == 'Operasional') {  ?>
                               <a href="<?= base_url('pemesanan/operasional_edit/'.$r->id_pesanan); ?>">[Konfirmasi]</a>

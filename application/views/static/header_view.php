@@ -115,7 +115,7 @@
 
       <?php } ?>
 
-      <?php if ($this->session->userdata('nama_level') == 'Produksi') { ?>
+      <?php if ($this->session->userdata('nama_level') == 'Produksi' || $this->session->userdata('nama_level') == 'QC') { ?>
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu1" aria-expanded="true" aria-controls="menu1">

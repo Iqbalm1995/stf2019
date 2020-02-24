@@ -28,7 +28,7 @@
 		  var dp = new DayPilot.Gantt("dp");
 
 		  dp.startDate = new DayPilot.Date();
-		  dp.days = 30;
+		  dp.days = 100;
 
 		  dp.linkBottomMargin = 5;
 

@@ -26,13 +26,14 @@
 
 	                    <div class="form-group">
 	                        <label><i><b>Kategori</b></i></label>
-	                        <select name="id_level" class="form-control" required>
+	                        <select name="nama_level" class="form-control" required>
 	                            <optgroup label="PILIHAN">
-	                                <option value="1">Marketing</option>
-	                                <option value="2">PCC</option>
-	                                <option value="3">Produksi</option>
-	                                <option value="4">Administrator</option>
-	                                <option value="5">Operasional</option>
+	                                <option value="Marketing">Marketing</option>
+	                                <option value="Ppc">PCC</option>
+	                                <option value="Produksi">Produksi</option>
+	                                <option value="Administrator">Administrator</option>
+	                                <option value="Operasional">Operasional</option>
+	                                <option value="QC">Quality Control</option>
 	                            </optgroup>
 	                        </select>
 	                    </div>

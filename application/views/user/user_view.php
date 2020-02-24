@@ -27,27 +27,11 @@
                     <?php 
                       $no = 1;
                       foreach($user as $r){ 
-                        switch ($r->id_level) {
-                          case '1':
-                            $level = 'Marketing';
-                            break;
-                          case '2':
-                            $level = 'PCC';
-                            break;
-                          case '3':
-                            $level = 'Produksi';
-                            break;
-                          
-                          default:
-                            $level = 'Administrator';
-                            break;
-                        }
-
                     ?>
                       <tr>
                         <td class="text-center"><?= $no++ ?></td>
                         <td><?= $r->username ?></td>
-                        <td class="text-center"><?= $level ?></td>
+                        <td class="text-center"><?= $r->nama_level ?></td>
                         <td class="text-center">
                           <a href="<?= base_url('user/edit/'.$r->id_user); ?>">[Ubah]</a> 
                           <a href="<?= base_url('user/hapus/'.$r->id_user); ?>">[Hapus]</a>

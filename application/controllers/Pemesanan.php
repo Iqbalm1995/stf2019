@@ -223,6 +223,41 @@ class Pemesanan extends CI_Controller {
         return $data;
     }
 
+    public function estimasi_harga($nama_produk, $qty)
+    {
+        $list_bb = $this->pemesanan->tampil_bb($nama_produk);
+        $no = 1;
+        $total_bb = 0;
+        $total_harga_bb = 0;
+
+        foreach($list_bb as $bb){ 
+            $bb_qty = $bb->qty;
+            $order_p = $qty;
+            $total_bbQty = $bb_qty * $order_p;
+            $harga_bb = $total_bbQty * $bb->harga;
+            $total_bb = $total_bb +  $harga_bb;
+            $total_harga_bb = $total_harga_bb +  $total_bb;
+        }
+
+        $potongan_total_harga_bb = (10/100)*$total_harga_bb;
+        $total_biaya_estimasi = $total_harga_bb + $potongan_total_harga_bb;
+
+        $estimasi_data = array( 'qty_bb' => $total_bb, 
+                                'biaya_bb' => $total_harga_bb,
+                                'potongan_bb' => $potongan_total_harga_bb, 
+                                'total_biaya' => $total_biaya_estimasi
+                                );
+        return $estimasi_data;
+    }
+
+    public function testdata()
+    {
+        $dataEstimasi = $this->estimasi_harga('Conveyor', 60);
+        echo "<pre>";
+        print_r($dataEstimasi['total_biaya']);
+        echo "<pre>";
+    }
+
 	public function proses_tambah()
     {
         //generate No Pembayaran
@@ -281,6 +316,7 @@ class Pemesanan extends CI_Controller {
         // echo "<pre>";
         // print_r($proses_jadwal);
         // echo "</pre>";
+        $dataEstimasi = $this->estimasi_harga($nama_produk, $qty);
 
         $data = array(
             'nomor_pesanan' 	=> $no_pesanan,
@@ -297,6 +333,7 @@ class Pemesanan extends CI_Controller {
             'jadwal_produksi'   => $proses_jadwal['jadwal_produksi'],
             'jadwal_distribusi' => $proses_jadwal['jadwal_distribusi'],
             'start_pemesanan'   => $proses_jadwal['start_pemesanan'],
+            'total_pembayaran'  => $dataEstimasi['total_biaya']
         );
         $tambahpesanan = $this->pelanggan->tambahpesanan($data);
 

@@ -50,7 +50,7 @@
 
 	                    <div class="form-group">
 	                        <label>Qty</label>
-	                        <input type="number" name="qty" placeholder="qty" class="form-control" value="<?=$qty;?>" required>
+	                        <input type="number" name="qty" onchange="minOrder(this.value)" placeholder="qty" class="form-control" value="<?=$qty;?>" required>
 	                    </div>
 	                    <br>
 					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-paper-plane"></i> Kirim Permintaan</button>
@@ -59,3 +59,12 @@
 	        </div>
 
 	    </div>
+      <script type="text/javascript">
+          
+          function minOrder(param) {
+              if (param <= 24) {
+                alert("Minimal Pembelian Tidak Boleh Kurang dari 25");
+              }
+          }
+
+      </script>

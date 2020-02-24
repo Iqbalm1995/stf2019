@@ -30,7 +30,7 @@ class User extends CI_Controller {
             'id_user' 					=> '',
 		    'username' 					=> '',
             'password' 					=> '',
-            'id_level'					=> ''
+            'nama_level'				=> ''
 		);
 
 		$this->load->view('static/header_view');
@@ -44,7 +44,7 @@ class User extends CI_Controller {
         $data = array(
             'username' 			=> $this->input->post('username'),
             'password' 			=> password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-            'id_level' 			=> $this->input->post('id_level')
+            'nama_level' 		=> $this->input->post('nama_level')
         );
 
         $simpan_data = $this->user->input_data($data);
@@ -70,7 +70,7 @@ class User extends CI_Controller {
                 'id_user' 					=> set_value('id', $row->id_user),
 			    'username' 					=> set_value('username', $row->username),
 	            'password' 					=> '',
-	            'id_level'					=> set_value('id_level', $row->id_level)
+	            'nama_level'				=> set_value('nama_level', $row->nama_level)
 		    );
 
 			$this->load->view('static/header_view');
@@ -94,7 +94,7 @@ class User extends CI_Controller {
 		$data = array(
 			'username' 		=> $this->input->post('username'),
 			'password' 		=> password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-			'id_level' 		=> $this->input->post('id_level')
+			'nama_level' 	=> $this->input->post('nama_level')
 		);
 
 		$where = array('id_user' => $id_user);

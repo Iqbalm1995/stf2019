@@ -12,6 +12,72 @@
 	            	<h6 class="m-0 font-weight-bold text-primary">Form Pemesanan</h6>
 	            </div>
 	            <div class="offset-md-2 col-md-8 offset-md-2 card-body">
+	            	<h3>Penjadwalan Gantt Chart</h3>
+	            	<a href="<?=base_url('pemesanan/gantt/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Atur Gantt Chart</a>
+	            	<hr>
+	            	<h3>Verifikasi Pesanan</h3>
+	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
+					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>">
+					  	<?php  $status_pesan = $this->db->get('status_pesan')->result();
+							  	$status_proses = $this->db->get('status_proses')->result(); ?>
+
+	                    <div class="form-group">
+	                        <label><i><b>Status Order</b></i></label>
+	                        <select name="id_status_pesan" class="form-control" required>
+	                            <optgroup label="PILIHAN">
+	                            	<option value="">-Pilih-</option>
+	                                <?php foreach ($status_pesan as $o) : ?>
+	                                    <option value="<?php echo $o->id_status_pesan ?>" <?=(($o->id_status_pesan == $id_status_pesan) ? 'selected' : '') ?>><?= $o->nama_status_pesan ?></option>
+	                                <?php endforeach ?>
+	                            </optgroup>
+	                        </select>
+	                    </div>
+
+	                    <div class="form-group">
+	                        <label><i><b>Start Pemesanan</b></i></label>
+	                        <input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="start_pemesanan" placeholder="YYYY-MM-DD" value="<?=$start_pemesanan;?>" required readonly>
+	                    </div>
+
+	                    <div class="form-group">
+	                        <label><i><b>Delivery Pemesanan</b></i></label>
+	                        <input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="delivery_pemesanan" placeholder="YYYY-MM-DD" value="<?=$delivery_pemesanan;?>" required readonly>
+	                    </div>
+
+	                    <div class="form-group">
+	                        <label><i><b>Status Proses</b></i></label> : 
+	                        <?=$nama_status_proses;?>
+		                </div>
+	                    
+	                    
+
+	                    <br>
+					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-save"></i> Simpan Verifikasi Pesanan</button>
+					</form>
+	            	<hr>
+	            	<h3>Konfirmasi Pembayaran</h3>
+	            	<?php 
+	            		$cekPembayaran = $this->pemesanan->getPembayaran($nomor_pesanan);
+	            		$gbr_bukti = $cekPembayaran->bukti;;
+
+	            		if ($cekPembayaran->status == 1 && $cekPembayaran->bukti == null) { ?>
+
+		            	<div class="alert alert-warning" role="alert">
+			              <strong>Perhatian <i class="glyphicon glyphicon-ok"></i></strong> Pelanggan Belum Melakukan Pembayaran!
+			            </div>
+	            	<?php }else{ ?>
+	            		<table width="100%" class="table">
+	            			<tr>
+	            				<td width="50%">
+	            					<img src="<?=base_url('upload_file/'. $gbr_bukti)?>" style="max-height: 500px; max-width: 500px" >
+	            				</td>
+	            				<td>
+	            					<h4 class="text-success">Pembayaran sudah dilakukan</h4>
+	            				</td>
+	            			</tr>
+	            		</table>
+	            	<?php } ?>
+	            	<hr>
+	            	<h3>Detail Pemesanan</h3>
 	            	<table width="100%">
 	            		<tr>
 	            			<td width="30%">Nama Pemesan</td>
@@ -75,75 +141,13 @@
 	            		</tr>
 	            		<tr>
 	            			<td colspan="2" class="text-right pt-4">
+	            				<hr>
 	            				<h4><strong>Biaya Estimasi</strong> : Rp. <?=(!empty($total_pembayaran) ? number_format($total_pembayaran, 0 , '' , '.' )." .00" : '-') ?></h4>
 	            			</td>
 	            		</tr>
 	            	</table>
-	            	<hr>
-	            	<h3>Konfirmasi Pembayaran</h3>
-	            	<?php 
-	            		$cekPembayaran = $this->pemesanan->getPembayaran($nomor_pesanan);
-	            		$gbr_bukti = $cekPembayaran->bukti;;
-
-	            		if ($cekPembayaran->status == 1 && $cekPembayaran->bukti == null) { ?>
-
-		            	<div class="alert alert-warning" role="alert">
-			              <strong>Perhatian <i class="glyphicon glyphicon-ok"></i></strong> Pelanggan Belum Melakukan Pembayaran!
-			            </div>
-	            	<?php }else{ ?>
-	            		<table width="100%" class="table">
-	            			<tr>
-	            				<td width="50%">
-	            					<img src="<?=base_url('upload_file/'. $gbr_bukti)?>" style="max-height: 500px; max-width: 500px" >
-	            				</td>
-	            				<td>
-	            					<h4 class="text-success">Pembayaran sudah dilakukan</h4>
-	            				</td>
-	            			</tr>
-	            		</table>
-	            	<?php } ?>
-	            	<hr>
-	            	<h3>Verifikasi Pesanan</h3>
-	            	<form action="<?=$action;?>"  method="post" enctype="multipart/form-data">
-					  	<input type="hidden" name="id_pesanan" value="<?=$id_pesanan;?>">
-					  	<?php  $status_pesan = $this->db->get('status_pesan')->result();
-							  	$status_proses = $this->db->get('status_proses')->result(); ?>
-
-	                    <div class="form-group">
-	                        <label><i><b>Status Order</b></i></label>
-	                        <select name="id_status_pesan" class="form-control" required>
-	                            <optgroup label="PILIHAN">
-	                            	<option value="">-Pilih-</option>
-	                                <?php foreach ($status_pesan as $o) : ?>
-	                                    <option value="<?php echo $o->id_status_pesan ?>" <?=(($o->id_status_pesan == $id_status_pesan) ? 'selected' : '') ?>><?= $o->nama_status_pesan ?></option>
-	                                <?php endforeach ?>
-	                            </optgroup>
-	                        </select>
-	                    </div>
-
-	                    <div class="form-group">
-	                        <label><i><b>Start Pemesanan</b></i></label>
-	                        <input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="start_pemesanan" placeholder="YYYY-MM-DD" value="<?=$start_pemesanan;?>" required readonly>
-	                    </div>
-
-	                    <div class="form-group">
-	                        <label><i><b>Delivery Pemesanan</b></i></label>
-	                        <input type="text" class="form-control" data-date-format="yyyy-mm-dd" name="delivery_pemesanan" placeholder="YYYY-MM-DD" value="<?=$delivery_pemesanan;?>" required readonly>
-	                    </div>
-
-	                    <div class="form-group">
-	                        <label><i><b>Status Proses</b></i></label> : 
-	                        <?=$nama_status_proses;?>
-		                </div>
-	                    
-	                    
-
-	                    <br>
-					  	<button type="submit" class="btn btn-lg btn-success btn-block"><i class="fas fa-save"></i> Simpan Verifikasi Pesanan</button>
-					</form>
-	            	<hr>
-	            	<h3>Penjadwalan Gantt Chart</h3>
-	            	<a href="<?=base_url('pemesanan/gantt/'.$nomor_pesanan)?>" class="btn btn-info btn-block btn-lg"><i class="fa fa-calendar-alt"></i> Atur Gantt Chart</a>
+	            	<div class="pb-5 mb-5"></div>
+	            	
 	            </div>
 	        </div>
 
